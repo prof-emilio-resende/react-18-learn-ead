@@ -11,13 +11,21 @@
 
     function Home() {
         return (<div>
-            <Header />
+            <Header title="Meu título" />
             <h2>components aninhados</h2>
+            <List />
         </div>)
     }
 
-    function Header() {
-        return (<h1>Título para minha página</h1>);
+    function Header({ title }) {
+        return (<h1>{title}</h1>);
+    }
+
+    function List() {
+        const l = [1,2,3,4,5];
+        return (<ul>
+            {l.map(n => <li key={n}>{n}</li>)}
+        </ul>);
     }
 
     root.render(<Home />);
