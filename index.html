@@ -8,6 +8,18 @@
   <script type="text/jsx">
     const app = document.getElementById("app");
     const root = ReactDOM.createRoot(app);
-    root.render(<h1>Título para minha página</h1>);
+
+    function Home() {
+        return (<div>
+            <Header />
+            <h2>components aninhados</h2>
+        </div>)
+    }
+
+    function Header() {
+        return (<h1>Título para minha página</h1>);
+    }
+
+    root.render(<Home />);
   </script>
 </html>
