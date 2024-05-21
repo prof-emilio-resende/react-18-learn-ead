@@ -10,10 +10,18 @@
     const root = ReactDOM.createRoot(app);
 
     function Home() {
+        const [counter, setCounter] = React.useState(0);
+
+        function counterFct() { 
+            console.log('btn clicked!');
+            setCounter(counter + 1);
+        }
+
         return (<div>
             <Header title="Meu título" />
             <h2>components aninhados</h2>
             <List />
+            <Button text={`react button ${counter}`} onClickFct={counterFct}/>
         </div>)
     }
 
@@ -26,6 +34,13 @@
         return (<ul>
             {l.map(n => <li key={n}>{n}</li>)}
         </ul>);
+    }
+
+    function Button({text, onClickFct}) {
+        return (<button
+            onClick={onClickFct}>
+            {text}
+        </button>)
     }
 
     root.render(<Home />);
