@@ -9,8 +9,25 @@
     const app = document.getElementById("app");
     const root = ReactDOM.createRoot(app);
 
-    function Home() {
+    const CounterContext = React.createContext();
+
+    function CounterContextProvider({children}) {
         const [counter, setCounter] = React.useState(0);
+
+        return (<CounterContext.Provider value={{counter, setCounter}}>
+            {children}
+        </CounterContext.Provider>)
+    }
+
+    function App() {
+        return (<CounterContextProvider>
+            <Home />
+        </CounterContextProvider>)
+    }
+
+    function Home() {
+        const { counter, setCounter } = React.useContext(CounterContext);
+        console.log(counter, setCounter);
 
         function counterFct() { 
             console.log('btn clicked!');
@@ -21,28 +38,32 @@
             <Header title="Meu título" />
             <h2>components aninhados</h2>
             <List />
-            <Button text={`react button ${counter}`} onClickFct={counterFct}/>
+            <Button text="react button" onClickFct={counterFct}/>
         </div>)
     }
 
     function Header({ title }) {
-        return (<h1>{title}</h1>);
+        const { counter } = React.useContext(CounterContext);
+
+        return (<h1>{`${title} + ${counter}`}</h1>);
     }
 
     function List() {
-        const l = [1,2,3,4,5];
+        const { counter } = React.useContext(CounterContext);
+        const l = [1,2,3,4,5,counter];
         return (<ul>
             {l.map(n => <li key={n}>{n}</li>)}
         </ul>);
     }
 
     function Button({text, onClickFct}) {
+        const { counter } = React.useContext(CounterContext);
         return (<button
             onClick={onClickFct}>
-            {text}
+            {`${text} + ${counter}`}
         </button>)
     }
 
-    root.render(<Home />);
+    root.render(<App />);
   </script>
 </html>
